@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 import cookieParser from "cookie-parser";
+import restaurantRoutes from './routes/restaurantRoutes.js';
+import authRoutes from './routes/authRoutes.js'
 
 const app = express();
 
@@ -16,6 +18,10 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+
+app.use("/restaurant", restaurantRoutes);
+app.use("/signup", authRoutes)
+
 
 app.listen(process.env.PORT || 8000, '0.0.0.0', () => {
   console.log(`Server is running on port ${process.env.PORT || 8000}`);

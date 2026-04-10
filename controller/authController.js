@@ -7,9 +7,9 @@ import {User} from '../model/userModel.js'
 export const signup = async (req, res) => {
     try{
     const {firstName, lastName, email, password} = req.body;
-    // if ( !firstName || !lastName || !email || !password){
-    //     return res.json('signup', {error : "all fields are required"});
-    //     }
+    if ( !firstName || !lastName || !email || !password){
+        return res.json('signup', {error : "all fields are required"});
+        }
 
         const exsisting = await User.findOne({email});
 

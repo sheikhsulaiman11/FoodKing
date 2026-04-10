@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.use("/restaurant", restaurantRoutes);
-app.use("/signup", authRoutes)
+app.use("/auth", authRoutes)
 
 
 app.listen(process.env.PORT || 8000, '0.0.0.0', () => {

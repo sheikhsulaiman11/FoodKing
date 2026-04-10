@@ -7,14 +7,14 @@ import {User} from '../model/userModel.js'
 export const signup = async (req, res) => {
     try{
     const {firstName, lastName, email, password} = req.body;
-    if ( !firstName || !lastName || !email || !password){
-        return res.render('signup', {error : "all fields are required"});
-        }
+    // if ( !firstName || !lastName || !email || !password){
+    //     return res.json('signup', {error : "all fields are required"});
+    //     }
 
         const exsisting = await User.findOne({email});
 
         if (exsisting){
-            return res.render('signup', {error: "email already exsists"})
+            return res.json({error: "email already exsists"})
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -27,14 +27,18 @@ export const signup = async (req, res) => {
             { expiresIn: '1hour' } 
         )
 
+        console.log(token);
+
         res.cookie('token', token, {
             httpOnly : true,
-            sameSite: none,
             secure: true,
         })
 
-        res.redirect('/');
-} catch (err) {
+
+
+        res.status(201).json({
+        success: true,
+        message: "User created successfully"
+})} catch (err) {
         console.log(err);
-        res.render('signup', { error: 'Something went wrong, try again' });
 }}

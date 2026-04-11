@@ -6,18 +6,23 @@ import cookieParser from "cookie-parser";
 import restaurantRoutes from './routes/restaurantRoutes.js';
 import authRoutes from './routes/authRoutes.js'
 
+
 const app = express();
 
+
 app.set('trust proxy', 1);
+
 
 mongoose.connect(process.env.MONGO_URL)
   .then(() => console.log('mongoDB connected successfully'))
   .catch((err) => console.log(err));
 
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+
 
 app.use("/restaurant", restaurantRoutes);
 app.use("/auth", authRoutes)

@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs'
 import {User} from '../model/userModel.js'
+import { createJWT } from '../utils/generateToken&SetToken.js';
 
 
 // Render login page
@@ -34,21 +35,12 @@ export const signup = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = await User.create({firstName, lastName, email, password: hashedPassword});
+        
 
-        const token = jwt.sign(
-            { id : user._id },
-            process.env.JWT_SECRET,
-            { expiresIn: '1hour' } 
-        )
+        const data = { username: user.name, userId: user._id, role: user.role };
+        createJWT(data, res);
 
         console.log(token);
-
-        res.cookie('token', token, {
-            httpOnly : true,
-            secure: true,
-        })
-
-
 
         res.status(201).json({
         success: true,
@@ -71,18 +63,9 @@ export const login = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.json('login', {error: 'wrong password'})
 
-             const token = jwt.sign(
-            { id : user._id },
-            process.env.JWT_SECRET,
-            { expiresIn: '1hour' } 
-        )
+         const data = { username: user.name, userId: user._id, role: user.role };
+        createJWT(data, res);
 
-        console.log(token);
-
-        res.cookie('token', token, {
-            httpOnly : true,
-            secure: true,
-        });
 
         res.status(201).json({
         success: true,

@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs'
 import {User} from '../model/userModel.js'
 import { createJWT } from '../utils/generateToken&SetToken.js';

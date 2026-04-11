@@ -15,8 +15,6 @@ export const renderSignup = (req, res) => {
 };
 
 
-
-
 //signup user
 export const signup = async (req, res) => {
     try{

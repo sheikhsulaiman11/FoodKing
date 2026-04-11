@@ -21,22 +21,22 @@ const restaurantSchema = new mongoose.Schema({
   required: true
   },
 
-  menu: [
-    {
-    itemName: {
-        type: String,
-        required: true,
-    },
-    price: {
-        type: Number,
-        required: true
-    },
-    description: {
-        type: String,
-        required: true
-    }
-    }
-  ]
+  // menu: [
+  //   {
+  //   itemName: {
+  //       type: String,
+  //       required: true,
+  //   },
+  //   price: {
+  //       type: Number,
+  //       required: true
+  //   },
+  //   description: {
+  //       type: String,
+  //       required: true
+  //   }
+  //   }
+  // ]
 });
 
 export default mongoose.model("Restaurant", restaurantSchema);

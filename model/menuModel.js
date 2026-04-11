@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const menuSchema = new mongoose.Schema({
+const menuItemSchema = new mongoose.Schema({
         name :{
             type : String,
             required : true
@@ -12,8 +12,22 @@ const menuSchema = new mongoose.Schema({
         price : {
             type : Number,
             required : true
+        },
+        image: {
+            type: String,
+            required: true
         }
     }
 )
+
+
+const menuSchema = new mongoose.Schema({
+    restaurant : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Restaurant',
+        required: true
+    },
+    items: [menuItemSchema]
+})
 
 export default mongoose.model("Menu", menuSchema);

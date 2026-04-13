@@ -3,9 +3,9 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 import cookieParser from "cookie-parser";
-import restaurantRoutes from './backend/routes/restaurantRoutes.js';
-import authRoutes from './backend/routes/authRoutes.js'
-import cartRoutes from './backend/routes/cartRoutes.js'
+import restaurantRoutes from './routes/restaurantRoutes.js';
+import authRoutes from './routes/authRoutes.js'
+import cartRoutes from './routes/cartRoutes.js'
 
 
 const app = express();

@@ -5,6 +5,7 @@ dotenv.config();
 import cookieParser from "cookie-parser";
 import restaurantRoutes from './routes/restaurantRoutes.js';
 import authRoutes from './routes/authRoutes.js'
+import cartRoutes from './routes/cartRoutes.js'
 
 
 const app = express();
@@ -26,6 +27,7 @@ app.use(express.static('public'));
 
 app.use("/restaurant", restaurantRoutes);
 app.use("/auth", authRoutes)
+app.use("/cart", cartRoutes)
 
 
 app.listen(process.env.PORT || 8000, '0.0.0.0', () => {

@@ -1,6 +1,5 @@
 import express from 'express';
 const router = express.Router();
-// import { isauth } from '../middleware/auth.js';
 import { createRestaurant, deleteRestaurant,getAllRestaurants, updateRestaurant } from '../controller/restaurantController.js';
 import { authorizeRoles, ProtectedRoute } from '../middleware/auth.js';
 

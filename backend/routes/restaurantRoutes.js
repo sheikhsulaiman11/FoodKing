@@ -1,13 +1,13 @@
 import express from 'express';
+import { getAllRestaurants, createRestaurant, updateRestaurant, deleteRestaurant, approveRestaurant } from '../controller/restaurantController.js';
+import { protect, authorizeRoles } from '../middleware/auth.js';
+
 const router = express.Router();
-import { createRestaurant, deleteRestaurant,getAllRestaurants, updateRestaurant } from '../controller/restaurantController.js';
-import { authorizeRoles, ProtectedRoute } from '../middleware/auth.js';
 
-
-router.post("/", createRestaurant)
-router.get('/', ProtectedRoute,authorizeRoles('admin'), getAllRestaurants)
-router.patch('/:id',ProtectedRoute,authorizeRoles('admin'), updateRestaurant)
-router.delete('/:id',ProtectedRoute,authorizeRoles('admin'), deleteRestaurant)
-
+router.get('/', getAllRestaurants);                                                           // public
+router.post('/', protect, createRestaurant);                                                 // restaurant admin
+router.patch('/:id', protect, authorizeRoles('superAdmin'), updateRestaurant);               // super admin
+router.delete('/:id', protect, authorizeRoles('superAdmin'), deleteRestaurant);              // super admin
+router.patch('/:id/approve', protect, authorizeRoles('superAdmin'), approveRestaurant);      // super admin
 
 export default router;

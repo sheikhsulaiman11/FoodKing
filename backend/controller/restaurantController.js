@@ -59,3 +59,23 @@ export const deleteRestaurant = asyncHandler(async (req, res) => {
         message: 'Restaurant deleted successfully'
     });
 });
+
+// approve restaurant (super admin only)
+export const approveRestaurant = asyncHandler(async (req, res) => {
+    const restaurant = await Restaurant.findByIdAndUpdate(
+        req.params.id,
+        { isApproved: true },
+        { new: true }
+    );
+
+    if (!restaurant) {
+        res.status(404);
+        throw new Error('Restaurant not found');
+    }
+
+    res.status(200).json({
+        success: true,
+        message: 'Restaurant approved successfully',
+        data: restaurant
+    });
+});

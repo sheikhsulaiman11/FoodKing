@@ -1,6 +1,6 @@
 // context/AuthContext.jsx
 import { createContext, useState, useContext, useEffect } from 'react';
-import { login as loginApi, logout as logoutApi } from '../services/api';
+import { login as loginApi, logout as logoutApi, getMe } from '../services/api';
 
 const AuthContext = createContext();
 
@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
                 const res = await getMe(); // fetch current user
                 setUser(res.data);
                 setIsLoggedIn(true);
-            } catch(err) {
+            } catch(err) { 
                 setUser(null);
                 setIsLoggedIn(false);
             } finally {

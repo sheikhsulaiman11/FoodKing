@@ -1,33 +1,36 @@
 import mongoose from 'mongoose';
 
-const menuItemSchema = new mongoose.Schema({
-        name :{
-            type : String,
-            required : true
-        },
-        description : {
-            type : String,
-            required : true
-        },
-        price : {
-            type : Number,
-            required : true
-        },
-        image: {
-            type: String,
-            required: true
-        }
-    }
-)
-
-
 const menuSchema = new mongoose.Schema({
-    restaurant : {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Restaurant',
-        required: true
+    name: {
+        type: String,
+        required: [true, 'Food item name is required'],
     },
-    items: [menuItemSchema]
-})
+    description: {
+        type: String,
+        required: [true, 'Description is required'],
+    },
+    price: {
+        type: Number,
+        required: [true, 'Price is required'],
+    },
+    image: {
+        type: String,
+        default: '',                  // URL of the food image
+    },
+    category: {
+        type: String,
+        required: [true, 'Category is required'],
+        enum: ['Breakfast', 'Lunch', 'Dinner', 'Snacks', 'Drinks', 'Desserts'],
+    },
+    restaurantId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Restaurant',            // links this item to a restaurant
+        required: [true, 'Restaurant ID is required'],
+    },
+    isAvailable: {
+        type: Boolean,
+        default: true,                // restaurant can mark items out of stock
+    },
+}, { timestamps: true });
 
-export default mongoose.model("Menu", menuSchema);
+export const Menu = mongoose.model('Menu', menuSchema);

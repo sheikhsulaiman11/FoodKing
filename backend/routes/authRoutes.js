@@ -1,12 +1,12 @@
 import express from 'express';
-const router = express.Router();
-import {signup, login} from '../backend/controller/authController.js'
+import { signup, login, logout, getMe } from '../controller/authController.js';
+import { protect } from '../middleware/auth.js';
 
-router.post('/signup', signup)
-router.post('/login', login)
-router.get("/logout", (req, res) => {
-    res.clearCookie('token');
-    res.redirect('/login');
-});
+const router = express.Router();
+
+router.post('/register', signup);
+router.post('/login', login);
+router.post('/logout', logout);
+router.get('/me', protect, getMe);
 
 export default router;

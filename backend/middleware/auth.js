@@ -1,39 +1,39 @@
-import { isTokenValid } from '../utils/generateToken&SetToken.js';
+import { isTokenValid } from '../utils/generateToken.js';
+import asyncHandler from '../utils/asyncHandler.js';
 
-
-
-
-const ProtectedRoute = async (req, res, next) => {
-  try {
+const protect = asyncHandler(async (req, res, next) => {
     const token = req.cookies.token;
+
     if (!token) {
-      return res.status(401).json({ message: "Unauthorized: No token provided" });
+        res.status(401);
+        throw new Error('Unauthorized: No token provided');
     }
 
     const payload = isTokenValid(token, process.env.JWT_SECRET);
+
     if (!payload) {
-      return res.status(401).json({ message: "Unauthorized: Invalid token" });
+        res.status(401);
+        throw new Error('Unauthorized: Invalid token');
     }
 
-    const { name, userId, role } = payload;
-    req.user = { userId, role };
+    const { username, userId, role } = payload;
 
-    console.log(`Authenticated User: ${name}, ID: ${userId}, Role: ${role}`);
+    // _id is what all your controllers use
+    req.user = { _id: userId, userId, role };
+
+    console.log(`Authenticated User: ${username}, ID: ${userId}, Role: ${role}`);
 
     next();
-  } catch (error) {
-    console.error("ProtectedRoute Error:", error.message);
-    return res.status(500).json({ message: "Internal Server Error" });
-  }
-};
+});
 
 const authorizeRoles = (...roles) => {
-  return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
-        return res.status(403).json(`{message: 'Access denied for role': ${req.user.role} }`);
-    }
-    next();
-  };
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+            res.status(403);
+            throw new Error(`Access denied for role: ${req.user.role}`);
+        }
+        next();
+    };
 };
 
-export { ProtectedRoute, authorizeRoles };
+export { protect, authorizeRoles };

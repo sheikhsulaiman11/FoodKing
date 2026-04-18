@@ -1,50 +1,61 @@
-import restrauntModel from '../model/restrauntModel.js';
-import Restaurant from '../model/restrauntModel.js'
+import { Restaurant } from '../model/restaurantModel.js';
+import asyncHandler from '../utils/asyncHandler.js';
 
-//get all restraunts
-export const getAllRestaurants = async (req, res) => {
-    try{
-        const restaurant = await Restaurant.find()
-        res.json(restaurant)
-       
-        } catch (error){
-        console.log('Fetch error:', error.message);
-        res.status(500).send('Failed to fetch restaurants');
+// get all restaurants
+export const getAllRestaurants = asyncHandler(async (req, res) => {
+    const restaurants = await Restaurant.find();
+    res.status(200).json({
+        success: true,
+        data: restaurants
+    });
+});
+
+// create new restaurant
+export const createRestaurant = asyncHandler(async (req, res) => {
+    const { name, location } = req.body;
+
+    if (!name || !location) {
+        res.status(400);
+        throw new Error('Name and location are required');
     }
-} 
 
-//creat new restaurant
-export const createRestaurant = async (req, res) => {
-    try {
-        const {name,location} = req.body;
-        
-        const restaurant = await restrauntModel.create(req.body);
+    const restaurant = await Restaurant.create(req.body);
+    res.status(201).json({
+        success: true,
+        data: restaurant
+    });
+});
 
-        res.json(restaurant)
-    }catch(e){
-        console.log(e);
+// update restaurant
+export const updateRestaurant = asyncHandler(async (req, res) => {
+    const restaurant = await Restaurant.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true }        
+    );
+
+    if (!restaurant) {
+        res.status(404);
+        throw new Error('Restaurant not found');
     }
-}
 
-//update restaurant details
-export const updateRestaurant = async (req, res) => {
-    const restaurantId = req.params.id;
-    try{
-         const restaurant = await Restaurant.findByIdAndUpdate(restaurantId, req.body)
-         res.json(restaurant)
-    } catch (error){
-        console.log(error)
+    res.status(200).json({
+        success: true,
+        data: restaurant
+    });
+});
+
+// delete restaurant
+export const deleteRestaurant = asyncHandler(async (req, res) => {
+    const restaurant = await Restaurant.findByIdAndDelete(req.params.id);
+
+    if (!restaurant) {
+        res.status(404);
+        throw new Error('Restaurant not found');
     }
-}
 
-
-//delete restaurent
-export const deleteRestaurant = async (req, res) => {
-    const restaurantId = req.params.id;
-    try {
-        const restaurant = await Restaurant.findByIdAndDelete(restaurantId)
-        res.json('done');
-    } catch (error) {
-        console.log(error)
-    }
-}
+    res.status(200).json({
+        success: true,
+        message: 'Restaurant deleted successfully'
+    });
+});

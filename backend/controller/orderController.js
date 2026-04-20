@@ -54,8 +54,8 @@ export const getMyOrders = asyncHandler(async (req, res) => {
 // get a single order by id
 export const getOrderById = asyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id)
-        .populate('restaurantId', 'name location')
-        .populate('items.menuItemId', 'name price image');
+        .populate('restaurantId', 'name location')          //brings restaurant name and location
+        .populate('items.menuItemId', 'name price image');    // brings items name, price and image
 
     if (!order) {
         res.status(404);

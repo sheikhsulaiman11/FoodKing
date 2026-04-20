@@ -1,7 +1,6 @@
 import { Restaurant } from '../model/restaurantModel.js';
 import asyncHandler from '../utils/asyncHandler.js';
 
-
 export const isRestaurantOwner = asyncHandler(async (req, res, next) => {
     const restaurant = await Restaurant.findById(req.params.restaurantId);
 

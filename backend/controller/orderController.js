@@ -42,8 +42,8 @@ export const placeOrder = asyncHandler(async (req, res) => {
 // get logged in user's order history
 export const getMyOrders = asyncHandler(async (req, res) => {
     const orders = await Order.find({ userId: req.user._id })
-        .populate('restaurantId', 'name location')  // brings restaurant name + location
-        .sort({ createdAt: -1 });                   // newest orders first
+        .populate('restaurantId', 'name location')       // brings restaurant name + location
+        .sort({ createdAt: -1 });                        // newest orders first
 
     res.status(200).json({
         success: true,
@@ -118,8 +118,8 @@ export const updateOrderStatus = asyncHandler(async (req, res) => {
 // get all orders on the platform (super admin)
 export const getAllOrders = asyncHandler(async (req, res) => {
     const orders = await Order.find()
-        .populate('userId', 'firstName lastName email')
-        .populate('restaurantId', 'name location')
+        .populate('userId', 'firstName lastName email')        // gets users firstname, lastname and email
+        .populate('restaurantId', 'name location')             // gets restaurants name and location
         .sort({ createdAt: -1 });
 
     res.status(200).json({

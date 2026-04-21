@@ -1,6 +1,5 @@
-// context/AuthContext.jsx
 import { createContext, useState, useContext, useEffect } from 'react';
-import { login as loginApi, logout as logoutApi, getMe } from '../services/api';
+import { loginUser, logoutUser, getMe } from '../services/authServices';
 
 const AuthContext = createContext();
 
@@ -9,15 +8,13 @@ export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [loading, setLoading] = useState(true);
 
-    // check if user is already logged in on page load
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                // call backend to check if cookie is valid
-                const res = await getMe(); // fetch current user
+                const res = await getMe();
                 setUser(res.data);
                 setIsLoggedIn(true);
-            } catch(err) { 
+            } catch(err) {
                 setUser(null);
                 setIsLoggedIn(false);
             } finally {
@@ -28,13 +25,15 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const login = async (credentials) => {
-        const res = await loginApi(credentials);
+        const res = await loginUser(credentials);
+        localStorage.setItem('token', res.data.token);
         setUser(res.data.user);
         setIsLoggedIn(true);
     };
 
     const logout = async () => {
-        await logoutApi();
+        await logoutUser();
+        localStorage.removeItem('token');
         setUser(null);
         setIsLoggedIn(false);
     };

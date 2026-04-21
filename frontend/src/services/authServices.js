@@ -13,3 +13,8 @@ export const registerUser = async (userData) => {
 export const logoutUser = () => {
     localStorage.removeItem('token');
 };
+
+export const getMe = async () => {
+    const response = await api.get('/auth/me');
+    return response.data;
+};

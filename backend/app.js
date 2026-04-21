@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import restaurantRoutes from './routes/restaurantRoutes.js';
 import authRoutes from './routes/authRoutes.js'
 import cartRoutes from './routes/cartRoutes.js'
+import errorHandler from "./middleware/errorMiddleware.js";
 
 
 const app = express();
@@ -26,9 +27,10 @@ app.use(express.static('public'));
 
 
 app.use("/restaurant", restaurantRoutes);
-app.use("/auth", authRoutes)
-app.use("/cart", cartRoutes)
+app.use("/auth", authRoutes);
+app.use("/cart", cartRoutes);
 
+app.use(errorHandler);
 
 app.listen(process.env.PORT || 8000, '0.0.0.0', () => {
   console.log(`Server is running on port ${process.env.PORT || 8000}`);

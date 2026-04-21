@@ -7,6 +7,8 @@ import restaurantRoutes from './routes/restaurantRoutes.js';
 import authRoutes from './routes/authRoutes.js'
 import cartRoutes from './routes/cartRoutes.js'
 import errorHandler from "./middleware/errorMiddleware.js";
+import menuRoutes from './routes/menuRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 
 
 const app = express();
@@ -29,6 +31,8 @@ app.use(express.static('public'));
 app.use("/restaurant", restaurantRoutes);
 app.use("/auth", authRoutes);
 app.use("/cart", cartRoutes);
+app.use('/api/menu', menuRoutes);
+app.use('/api/orders', orderRoutes);
 
 app.use(errorHandler);
 

@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const Navbar = () => {
-    const { isLoggedIn, logout } = useAuth();
+    const { isLoggedIn, logout, user } = useAuth(); // ✅ add user
     const navigate = useNavigate();
 
     const handleLogout = async () => {
@@ -22,9 +22,11 @@ const Navbar = () => {
             <div className="flex gap-6 items-center">
                 {isLoggedIn ? (
                     <>
-                        <Link to="/cart" className="hover:text-orange-200">
-                            🛒 Cart
-                        </Link>
+                        {user?.role === 'user' && ( // ✅ only show cart for customers
+                            <Link to="/cart" className="hover:text-orange-200">
+                                🛒 Cart
+                            </Link>
+                        )}
                         <button
                             onClick={handleLogout}
                             className="bg-white text-orange-500 px-4 py-1 rounded-full font-semibold hover:bg-orange-100"

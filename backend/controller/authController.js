@@ -2,10 +2,11 @@ import bcrypt from 'bcryptjs';
 import { User } from '../model/userModel.js';
 import { createJWT } from '../utils/generateToken.js';
 import asyncHandler from '../utils/asyncHandler.js';
+import { Restaurant } from '../model/restaurantModel.js';
 
 // signup user
 export const signup = asyncHandler(async (req, res) => {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, role, restaurantData } = req.body;
 
     if (!firstName || !lastName || !email || !password) {
         res.status(400);
@@ -24,6 +25,7 @@ export const signup = asyncHandler(async (req, res) => {
         firstName,
         lastName,
         email,
+        role,
         password: hashedPassword
     });
 
@@ -32,8 +34,8 @@ export const signup = asyncHandler(async (req, res) => {
 
     res.status(201).json({
         success: true,
-        token,  // ✅ add this
-        user: { username: user.firstName, role: user.role } // ✅ add this
+        token, 
+        user: { username: user.firstName, role: user.role } 
         });
     });
 
@@ -63,8 +65,8 @@ export const login = asyncHandler(async (req, res) => {
 
     res.status(200).json({
         success: true,
-        token,  // ✅ add this
-        user: { username: user.firstName, role: user.role } // ✅ add this
+        token,  
+        user: { username: user.firstName, role: user.role } 
     });
 });
 

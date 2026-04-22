@@ -28,13 +28,14 @@ export const signup = asyncHandler(async (req, res) => {
     });
 
     const data = { username: user.firstName, userId: user._id, role: user.role };
-    createJWT(data, res);
+    const token = createJWT(data, res);
 
     res.status(201).json({
         success: true,
-        message: 'User created successfully'
+        token,  // ✅ add this
+        user: { username: user.firstName, role: user.role } // ✅ add this
+        });
     });
-});
 
 // login user
 export const login = asyncHandler(async (req, res) => {
@@ -58,11 +59,12 @@ export const login = asyncHandler(async (req, res) => {
     }
 
     const data = { username: user.firstName, userId: user._id, role: user.role };
-    createJWT(data, res);
+   const token = createJWT(data, res);
 
     res.status(200).json({
         success: true,
-        message: 'User logged in successfully'
+        token,  // ✅ add this
+        user: { username: user.firstName, role: user.role } // ✅ add this
     });
 });
 

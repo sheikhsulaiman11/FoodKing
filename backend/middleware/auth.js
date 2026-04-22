@@ -2,12 +2,15 @@ import { isTokenValid } from '../utils/generateToken.js';
 import asyncHandler from '../utils/asyncHandler.js';
 
 const protect = asyncHandler(async (req, res, next) => {
-    const token = req.cookies.token;
+    // ✅ read from Authorization header instead of cookie
+    const authHeader = req.headers.authorization;
 
-    if (!token) {
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
         res.status(401);
         throw new Error('Unauthorized: No token provided');
     }
+
+    const token = authHeader.split(' ')[1]; // extract token after "Bearer "
 
     const payload = isTokenValid(token, process.env.JWT_SECRET);
 
@@ -17,11 +20,7 @@ const protect = asyncHandler(async (req, res, next) => {
     }
 
     const { username, userId, role } = payload;
-
-    // _id is what all your controllers use
     req.user = { _id: userId, userId, role };
-
-    console.log(`Authenticated User: ${username}, ID: ${userId}, Role: ${role}`);
 
     next();
 });

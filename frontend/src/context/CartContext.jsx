@@ -9,16 +9,18 @@ export const CartProvider = ({ children }) => {
 
     // fetch cart on page load
     useEffect(() => {
-        const fetchCart = async () => {
-            try {
-                const res = await getCart();
-                setCart(res.data);
-            } catch (err) {
-                setCart({ items: [], totalPrice: 0 });
-            }
-        };
-        fetchCart();
-    }, []);
+    const fetchCart = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) return; 
+            const res = await getCart();
+            setCart(res.data);
+        } catch (err) {
+            setCart({ items: [], totalPrice: 0 });
+        }
+    };
+    fetchCart();
+}, []);
 
     const addToCartHandler = async (menuItemId, quantity) => {
         try {

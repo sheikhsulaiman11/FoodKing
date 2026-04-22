@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
+import cors from 'cors'
 import cookieParser from "cookie-parser";
 import restaurantRoutes from './routes/restaurantRoutes.js';
 import authRoutes from './routes/authRoutes.js'
@@ -21,16 +22,19 @@ mongoose.connect(process.env.MONGO_URL)
   .then(() => console.log('mongoDB connected successfully'))
   .catch((err) => console.log(err));
 
-
+app.use(cors({
+    origin: 'http://localhost:5173', // your React app URL
+    credentials: true,               // needed if you use cookies
+}));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 
-app.use("/restaurant", restaurantRoutes);
-app.use("/auth", authRoutes);
-app.use("/cart", cartRoutes);
+app.use("/api/restaurant", restaurantRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/cart", cartRoutes);
 app.use('/api/menu', menuRoutes);
 app.use('/api/orders', orderRoutes);
 

@@ -66,7 +66,7 @@ export const signup = asyncHandler(async (req, res) => {
 
 // login user
 export const login = asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
 
     if (!email || !password) {
         res.status(400);
@@ -77,6 +77,11 @@ export const login = asyncHandler(async (req, res) => {
     if (!user) {
         res.status(404);
         throw new Error('Email not found');
+    }
+
+     if (user.role !== role) {
+        res.status(403);
+        throw new Error(`This account is not registered as a ${role === 'restaurant_owner' ? 'restaurant owner' : 'customer'}`);
     }
 
     const isMatch = await bcrypt.compare(password, user.password);

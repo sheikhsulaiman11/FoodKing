@@ -34,8 +34,8 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (credentials) => {
         const res = await loginUser(credentials);
-        localStorage.setItem('token', res.token); // ✅ res.token not res.data.token
-        setUser(res.user);                         // ✅ res.user not res.data.user
+        localStorage.setItem('token', res.token);  
+        setUser(res.user);                         
         setIsLoggedIn(true);
 };
 

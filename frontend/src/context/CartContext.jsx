@@ -12,7 +12,7 @@ export const CartProvider = ({ children }) => {
     const fetchCart = async () => {
         try {
             const token = localStorage.getItem('token');
-            if (!token) return; 
+            if (!token) return;
             const res = await getCart();
             setCart(res.data);
         } catch (err) {

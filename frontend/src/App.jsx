@@ -11,6 +11,10 @@ import Checkout from './pages/user/Checkout';
 import OrderHistory from './pages/user/OrderHistory';
 import OrderSuccess from './pages/user/OrderSuccess';
 import OrderTracking from './pages/user/OrderTracking';
+import RestaurantDashboard from './pages/restaurants/RestaurantDashboard';
+import ManageOrders from './pages/restaurants/ManageOrders';
+import ManageMenu from './pages/restaurants/ManageMenu';
+
 
 const App = () => {
     return (
@@ -37,6 +41,11 @@ const App = () => {
                 <Route path='/orders' element={<ProtectedRoute><OrderHistory /></ProtectedRoute>} />
                 <Route path='/order-success' element={<ProtectedRoute><OrderSuccess /></ProtectedRoute>} />
                 <Route path='/order/:id' element={<ProtectedRoute><OrderTracking /></ProtectedRoute>} />
+
+                        {/* Restaurant panel */}
+                <Route path="/dashboard" element={<ProtectedRoute><RestaurantDashboard /></ProtectedRoute>} />
+                <Route path="/dashboard/menu" element={<ProtectedRoute><ManageMenu /></ProtectedRoute>} />
+                <Route path="/dashboard/orders" element={<ProtectedRoute><ManageOrders /></ProtectedRoute>} />
             </Routes>
         </BrowserRouter>
     );

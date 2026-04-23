@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
-import { placeOrder } from '../../services/orderService';
+import { placeOrder } from '../../services/orderServices';
 
 const Checkout = () => {
     const [deliveryAddress, setDeliveryAddress] = useState('');

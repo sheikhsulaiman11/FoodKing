@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getOrderById } from '../../services/orderService';
+import { getOrderById } from '../../services/orderServices';
 import Loader from '../../components/common/Loader';
 
 const OrderTracking = () => {

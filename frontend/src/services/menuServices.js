@@ -1,7 +1,7 @@
 import api from './api.js';
 
 export const getMenuByRestaurant = async (restaurantId) => {
-    const response = await api.get(`/menu/restaurant/${restaurantId}`);
+    const response = await api.get(`/menu/restaurants/${restaurantId}`);
     return response.data;
 };
 

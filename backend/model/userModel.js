@@ -3,16 +3,19 @@ import mongoose from 'mongoose';
 const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     lastName: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        lowercase: true
     },
     password: {
         type: String,
@@ -20,9 +23,10 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        default: "user"
+        enum: ['user', 'restaurant_owner'],
+        default: 'user'
     }
-})
+}, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
-export {User};
+export { User };

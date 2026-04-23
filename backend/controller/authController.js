@@ -29,15 +29,40 @@ export const signup = asyncHandler(async (req, res) => {
         password: hashedPassword
     });
 
-    const data = { username: user.firstName, userId: user._id, role: user.role };
+    // create restaurant document if role is restaurant_owner
+    let restaurant = null;
+    if (role === 'restaurant_owner') {
+        if (!restaurantData?.name || !restaurantData?.location || !restaurantData?.deliveryTime) {
+            res.status(400);
+            throw new Error('Restaurant name, location and delivery time are required');
+        }
+        restaurant = await Restaurant.create({
+            name:         restaurantData.name,
+            location:     restaurantData.location,
+            deliveryTime: restaurantData.deliveryTime,
+            rating:       0,
+            owner:        user._id
+        });
+    }
+
+    const data = {
+        username:     user.firstName,
+        userId:       user._id,
+        role:         user.role,
+        restaurantId: restaurant?._id || null
+    };
     const token = createJWT(data, res);
 
     res.status(201).json({
         success: true,
-        token, 
-        user: { username: user.firstName, role: user.role } 
-        });
+        token,
+        user: {
+            username:     user.firstName,
+            role:         user.role,
+            restaurantId: restaurant?._id || null
+        }
     });
+});
 
 // login user
 export const login = asyncHandler(async (req, res) => {
@@ -60,13 +85,28 @@ export const login = asyncHandler(async (req, res) => {
         throw new Error('Wrong password');
     }
 
-    const data = { username: user.firstName, userId: user._id, role: user.role };
-   const token = createJWT(data, res);
+    // fetch restaurant if owner
+    let restaurant = null;
+    if (user.role === 'restaurant_owner') {
+        restaurant = await Restaurant.findOne({ owner: user._id });
+    }
+
+    const data = {
+        username:     user.firstName,
+        userId:       user._id,
+        role:         user.role,
+        restaurantId: restaurant?._id || null
+    };
+    const token = createJWT(data, res);
 
     res.status(200).json({
         success: true,
-        token,  
-        user: { username: user.firstName, role: user.role } 
+        token,
+        user: {
+            username:     user.firstName,
+            role:         user.role,
+            restaurantId: restaurant?._id || null
+        }
     });
 });
 
@@ -88,8 +128,17 @@ export const getMe = asyncHandler(async (req, res) => {
         throw new Error('User not found');
     }
 
+    // fetch restaurant if owner
+    let restaurant = null;
+    if (user.role === 'restaurant_owner') {
+        restaurant = await Restaurant.findOne({ owner: user._id });
+    }
+
     res.status(200).json({
         success: true,
-        data: user
+        data: {
+            ...user.toObject(),
+            restaurantId: restaurant?._id || null
+        }
     });
 });

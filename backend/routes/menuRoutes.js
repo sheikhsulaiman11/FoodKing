@@ -5,7 +5,7 @@ import { isRestaurantOwner } from '../middleware/restaurantMiddleware.js';
 
 const router = express.Router();
 
-router.get('/restaurant/:restaurantId', getMenuByRestaurant);                               // public
+router.get('/restaurants/:restaurantId', getMenuByRestaurant);                               // public
 router.get('/:id', getMenuItem);                                                            // public
 router.post('/', protect, authorizeRoles('restaurantAdmin'), addMenuItem);                  // restaurant admin only
 router.patch('/:id', protect, isRestaurantOwner, updateMenuItem);                          // restaurant owner only

@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/restaurants/:restaurantId', getMenuByRestaurant);                               // public
 router.get('/:id', getMenuItem);                                                            // public
-router.post('/', protect, authorizeRoles('restaurantAdmin'), addMenuItem);                  // restaurant admin only
+router.post('/', protect, authorizeRoles('restaurant_owner'), addMenuItem);                  // restaurant admin only
 router.patch('/:id', protect, isRestaurantOwner, updateMenuItem);                          // restaurant owner only
 router.delete('/:id', protect, isRestaurantOwner, deleteMenuItem);                         // restaurant owner only
 router.patch('/:id/toggle', protect, isRestaurantOwner, toggleAvailability);               // restaurant owner only

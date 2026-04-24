@@ -15,7 +15,7 @@ const Navbar = () => {
             {/* Left side */}
             <div className="flex gap-6">
                 <Link to="/" className="hover:text-orange-200">Home</Link>
-                <Link to="/restaurants" className="hover:text-orange-200">Restaurants</Link>
+                {/* <Link to="/restaurants" className="hover:text-orange-200">Restaurants</Link> */}
             </div>
 
             {/* Right side */}

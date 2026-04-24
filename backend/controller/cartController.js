@@ -26,6 +26,7 @@ export const addToCart = asyncHandler(async (req, res) => {
 
     if (!menuItemId || quantity === undefined || quantity <= 0) {
     res.status(400);
+    res.redirect('/cart');
     throw new Error('menuItemId and a valid quantity are required');
 }
 

@@ -16,6 +16,7 @@ export const getMenuByRestaurant = asyncHandler(async (req, res) => {
     });
 });
 
+
 // get single menu item
 export const getMenuItem = asyncHandler(async (req, res) => {
     const menuItem = await Menu.findById(req.params.id);

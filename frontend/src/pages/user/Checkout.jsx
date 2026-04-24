@@ -22,7 +22,7 @@ const Checkout = () => {
 
         try {
             await placeOrder(deliveryAddress);
-            clearCart();
+            await clearCart();
             navigate('/order-success');
         } catch (err) {
             setError('Failed to place order, please try again');

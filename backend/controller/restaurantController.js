@@ -10,6 +10,25 @@ export const getAllRestaurants = asyncHandler(async (req, res) => {
     });
 });
 
+
+// get restaurant by owner
+export const getMyRestaurant = asyncHandler(async (req, res) => {
+    console.log('user id:', req.user._id);
+    const restaurant = await Restaurant.findOne({ owner: req.user._id });
+    console.log('found restaurant:', restaurant);
+
+    if (!restaurant) {
+        res.status(404);
+        throw new Error('Restaurant not found');
+    }
+
+    res.status(200).json({
+        success: true,
+        data: restaurant
+    });
+});
+
+
 // create new restaurant
 export const createRestaurant = asyncHandler(async (req, res) => {
     const { name, location } = req.body;

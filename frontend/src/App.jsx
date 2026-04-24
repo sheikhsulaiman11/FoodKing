@@ -20,7 +20,8 @@ import ManageMenu from './pages/restaurants/ManageMenu';
 
 // only lets restaurant owners through, redirects customers to home
 const RestaurantRoute = ({ children }) => {
-    const { user, isLoggedIn } = useAuth();
+    const { user, isLoggedIn, loading } = useAuth();
+    if (loading) return null;
     if (!isLoggedIn) return <Navigate to="/login" />;
     if (user?.role !== 'restaurant_owner') return <Navigate to="/" />;
     return children;

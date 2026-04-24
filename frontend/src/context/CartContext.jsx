@@ -55,8 +55,8 @@ export const CartProvider = ({ children }) => {
 
     const clearCartHandler = async () => {
         try {
-            await clearCart();
             setCart({ items: [], totalPrice: 0 });
+            await clearCart();
         } catch (err) {
             console.error('Error clearing cart', err);
         }

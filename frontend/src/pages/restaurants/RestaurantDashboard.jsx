@@ -1,24 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { getAllRestaurants } from '../../services/restaurantServices';
 import ManageOrders from './ManageOrders';
+import { getMyRestaurant } from '../../services/restaurantServices';
 
 const RestaurantDashboard = () => {
     const [restaurant, setRestaurant] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchRestaurant = async () => {
-            try {
-                const data = await getAllRestaurants();
-                  console.log(data);
-                  
-                setRestaurant(data[0]);
-            } catch (error) {
-                console.error(error);
-            } finally {
-                setLoading(false);
-            }
-        };
+
+            const fetchRestaurant = async () => {
+                try {
+                    const data = await getMyRestaurant();
+                    setRestaurant(data.data);
+                } catch (error) {
+                    console.error(error);
+                } finally {
+                    setLoading(false);
+                }
+            };
 
         fetchRestaurant();
     }, []);

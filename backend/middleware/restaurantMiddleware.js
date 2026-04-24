@@ -10,7 +10,7 @@ export const isRestaurantOwner = asyncHandler(async (req, res, next) => {
     }
 
     // check if the logged in user owns this restaurant
-    if (restaurant.ownerId.toString() !== req.user._id.toString()) {
+    if (restaurant.owner.toString() !== req.user._id.toString()) {
         res.status(401);
         throw new Error('Not authorized, you do not own this restaurant');
     }

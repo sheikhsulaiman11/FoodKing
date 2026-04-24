@@ -5,6 +5,11 @@ export const getAllRestaurants = async () => {
     return response.data;
 };
 
+export const getMyRestaurant = async () => {
+    const response = await api.get ('/restaurants/my-restaurant');
+    return response.data;
+}
+
 export const createRestaurant = async (restaurantData) => {
     const response = await api.post('/restaurants', restaurantData);
     return response.data;

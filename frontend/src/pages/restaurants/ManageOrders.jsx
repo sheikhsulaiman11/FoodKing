@@ -8,7 +8,7 @@ const ManageOrders = ({ restaurantId }) => {
     const fetchOrders = async () => {
         try {
             const data = await getRestaurantOrders(restaurantId);
-            setOrders(data);
+            setOrders(data.data);
         } catch (error) {
             console.error('Error fetching orders:', error);
         } finally {

@@ -7,6 +7,7 @@ import {
     deleteMenuItem,
     toggleAvailability,
 } from '../../services/menuServices';
+import { getMyRestaurant } from '../../services/restaurantServices';
 
 const CATEGORIES = ['Breakfast', 'Lunch', 'Dinner', 'Snacks', 'Drinks', 'Desserts'];
 
@@ -38,7 +39,7 @@ const emptyForm = {
 };
 
 export default function ManageMenu() {
-    const { user } = useAuth();
+    const [restaurantId, setRestaurantId] = useState(null);
 
     const [items, setItems]         = useState([]);
     const [loading, setLoading]     = useState(true);
@@ -55,7 +56,10 @@ export default function ManageMenu() {
     useEffect(() => {
         const fetchItems = async () => {
             try {
-                const data = await getMenuByRestaurant(user?.restaurantId);
+                const restaurantRes = await getMyRestaurant();
+                const resId = restaurantRes.data._id;
+                setRestaurantId(resId); // ✅ save to state
+                const data = await getMenuByRestaurant(resId + '?showAll=true');
                 setItems(data.data);
             } catch (err) {
                 setError('Failed to load menu items.');
@@ -63,8 +67,9 @@ export default function ManageMenu() {
                 setLoading(false);
             }
         };
-        if (user?.restaurantId) fetchItems();
-    }, [user]);
+        fetchItems();
+    }, []);
+
 
     // ── Derived ───────────────────────────────────────────────────────
     const categories  = [...new Set(items.map(i => i.category))];
@@ -115,7 +120,7 @@ export default function ManageMenu() {
                 const data = await updateMenuItem(editingItem._id, form);
                 setItems(prev => prev.map(i => i._id === editingItem._id ? data.data : i));
             } else {
-                const data = await addMenuItem({ ...form, restaurantId: user?.restaurantId });
+                const data = await addMenuItem({ ...form, restaurantId }); // ✅ use state
                 setItems(prev => [...prev, data.data]);
             }
             closeModal();

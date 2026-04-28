@@ -4,18 +4,16 @@ import asyncHandler from '../utils/asyncHandler.js';
 // get all menu items for a specific restaurant
 export const getMenuByRestaurant = asyncHandler(async (req, res) => {
     const { restaurantId } = req.params;
+    const showAll = req.query.showAll === 'true';
 
-    const menuItems = await Menu.find({ 
-        restaurantId, 
-        isAvailable: true       // only show available items to users
-    });
+    const filter = showAll
+        ? { restaurantId }
+        : { restaurantId, isAvailable: true };
 
-    res.status(200).json({
-        success: true,
-        data: menuItems
-    });
+    const menuItems = await Menu.find(filter);
+
+    res.status(200).json({ success: true, data: menuItems });
 });
-
 
 // get single menu item
 export const getMenuItem = asyncHandler(async (req, res) => {

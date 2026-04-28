@@ -25,10 +25,14 @@ const Navbar = () => {
                 {isLoggedIn ? (
                     <>
                         {user?.role === 'user' && ( // ✅ only show cart for customers
-                            <Link to="/cart" className="hover:text-orange-200">
+                           <>
+                           <Link to="/cart" className="hover:text-orange-200">
                                 🛒 Cart
                             </Link>
+                            <Link to="/orders" className="hover:text-orange-200">📦 Orders</Link>
+                            </>
                         )}
+
                         <button
                             onClick={handleLogout}
                             className="bg-white text-orange-500 px-4 py-1 rounded-full font-semibold hover:bg-orange-100"

@@ -5,7 +5,7 @@ import { isRestaurantOwner } from '../middleware/restaurantMiddleware.js';
 
 const router = express.Router();
 
-router.post('/', protect, placeOrder);                                                       // logged in user
+router.post('/', protect,authorizeRoles('user'), placeOrder);                                                       // logged in user
 router.get('/my-orders', protect, getMyOrders);                                              // logged in user
 router.get('/all', protect, authorizeRoles('superAdmin'), getAllOrders);                     // super admin only
 router.get('/restaurant/:restaurantId', protect, isRestaurantOwner, getRestaurantOrders);    // restaurant owner only

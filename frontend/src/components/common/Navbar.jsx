@@ -13,11 +13,13 @@ const Navbar = () => {
     return (
         <nav className="bg-orange-500 text-white px-6 py-4 flex justify-between items-center">
             {/* Left side */}
-            <div className="flex gap-6">
+           <div className="flex gap-6">
+                {user?.role === 'restaurant_owner' ? (
+                <Link to="/restaurant-dashboard" className="hover:text-orange-200">Dashboard</Link>
+            ) : (
                 <Link to="/" className="hover:text-orange-200">Home</Link>
-                {/* <Link to="/restaurants" className="hover:text-orange-200">Restaurants</Link> */}
-            </div>
-
+            )}
+        </div>
             {/* Right side */}
             <div className="flex gap-6 items-center">
                 {isLoggedIn ? (

@@ -30,8 +30,8 @@ const Navbar = () => {
                         {user?.role === 'user' && ( // ✅ only show cart for customers
                            <>
                            <Link to="/cart" className="hover:text-orange-200 relative">
-                                        🛒 Cart
-                                {itemCount > 0 && (
+                             🛒 Cart
+                            {itemCount > 0 && (
                             <span className="absolute -top-2 -right-3 bg-red-500 text-white text-xs font-bold min-w-[18px] h-[18px] rounded-full flex items-center justify-center px-1">
                                 {itemCount > 99 ? '99+' : itemCount}
                             </span>

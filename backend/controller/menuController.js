@@ -1,6 +1,7 @@
 import { Menu } from '../model/menuModel.js';
 import asyncHandler from '../utils/asyncHandler.js';
 
+
 // get all menu items for a specific restaurant
 export const getMenuByRestaurant = asyncHandler(async (req, res) => {
     const { restaurantId } = req.params;
@@ -14,6 +15,7 @@ export const getMenuByRestaurant = asyncHandler(async (req, res) => {
 
     res.status(200).json({ success: true, data: menuItems });
 });
+
 
 // get single menu item
 export const getMenuItem = asyncHandler(async (req, res) => {

@@ -37,10 +37,10 @@ export const addToCart = asyncHandler(async (req, res) => {
         throw new Error('Food item not found');
     }
 
-    let cart = await Cart.findOne({ userId: req.user._id });
+    // user has no cart yet — create one
 
+    let cart = await Cart.findOne({ userId: req.user._id });
     if (!cart) {
-        // user has no cart yet — create one
         cart = await Cart.create({
             userId: req.user._id,
             restaurantId: menuItem.restaurantId,
@@ -53,11 +53,13 @@ export const addToCart = asyncHandler(async (req, res) => {
             item => item.menuItemId.toString() === menuItemId
         );
 
+        // item already in cart — just increase quantity
+
         if (existingItem) {
-            // item already in cart — just increase quantity
             existingItem.quantity += quantity;
-        } else {
+
             // new item — push to cart
+        } else {
             cart.items.push({
                 menuItemId,
                 name: menuItem.name,

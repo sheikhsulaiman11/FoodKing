@@ -45,13 +45,13 @@ const RestaurantDashboard = () => {
                             <h1 className="text-2xl font-bold text-gray-800">{restaurant.name}</h1>
                             <p className="text-sm text-gray-500 mt-1">{restaurant.location} · {restaurant.deliveryTime} delivery</p>
                         </div>
-                        <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                        {/* <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
                             restaurant.isApproved
                                 ? 'bg-green-100 text-green-700'
                                 : 'bg-yellow-100 text-yellow-700'
                         }`}>
                             {restaurant.isApproved ? '✓ Approved' : '⏳ Pending Approval'}
-                        </span>
+                        </span> */}
                     </div>
 
                     {/* Tabs */}

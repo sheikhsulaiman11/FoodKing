@@ -33,21 +33,21 @@ const Login = () => {
         <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
             <div className="bg-white rounded-2xl shadow-md w-full max-w-md p-8">
 
-                {/* Logo / Title */}
+                         {/* Logo / Title */}
                 <div className="text-center mb-8">
                     <div className="text-4xl mb-2">🍔</div>
                     <h1 className="text-2xl font-bold text-gray-800">Welcome back</h1>
                     <p className="text-gray-500 text-sm mt-1">Login to your FoodKing account</p>
                 </div>
 
-                {/* Error */}
+                        {/* Error */}
                 {error && (
                     <div className="bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-lg mb-6">
                         {error}
                     </div>
                 )}
 
-                {/* Role selector */}
+                        {/* Role selector */}
                 <div className="mb-5">
                     <label className="block text-sm font-medium text-gray-700 mb-1">Login as</label>
                     <select
@@ -60,7 +60,7 @@ const Login = () => {
                     </select>
                 </div>
 
-                {/* Email */}
+                        {/* Email */}
                 <div className="mb-5">
                     <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
                     <input
@@ -72,7 +72,7 @@ const Login = () => {
                     />
                 </div>
 
-                {/* Password */}
+                        {/* Password */}
                 <div className="mb-6">
                     <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
                     <input
@@ -84,7 +84,7 @@ const Login = () => {
                     />
                 </div>
 
-                {/* Submit */}
+                        {/* Submit */}
                 <button
                     onClick={handleLogin}
                     disabled={loading}
@@ -93,7 +93,7 @@ const Login = () => {
                     {loading ? 'Logging in...' : 'Login'}
                 </button>
 
-                {/* Signup link */}
+                        {/* Signup link */}
                 <p className="text-center text-sm text-gray-500 mt-6">
                     Don't have an account?{' '}
                     <Link to="/signup" className="text-orange-500 font-semibold hover:underline">
